@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sort"
 )
 
 type Barang struct {
@@ -172,13 +171,29 @@ func cariNamaBarang() {
 	fmt.Println("Barang tidak ditemukan.")
 }
 
+// ================= URUTKAN KODE BARANG =================
+func urutkanKodeBarang() {
+	n := len(gudang)
+
+	for i := 0; i < n-1; i++ {
+
+		min := i
+
+		for j := i + 1; j < n; j++ {
+			if gudang[j].Kode < gudang[min].Kode {
+				min = j
+			}
+		}
+
+		gudang[i], gudang[min] = gudang[min], gudang[i]
+	}
+}
+
 // ================= CARI BERDASARKAN KODE =================
 func cariKodeBarang() {
 	var kode string
 
-	sort.Slice(gudang, func(i, j int) bool {
-		return gudang[i].Kode < gudang[j].Kode
-	})
+	urutkanKodeBarang()
 
 	fmt.Print("Masukkan kode barang : ")
 	fmt.Scan(&kode)
